@@ -19,8 +19,8 @@ dataloader_num_workers: 4
 
 ### output
 output_dir: /blob-pretraining-hptrainingfrancecentral-out/sigma-math/saves/sigma_sft_test/
-logging_steps: 1
-save_steps: 5000
+logging_steps: 10
+save_steps: 2000
 plot_loss: true
 overwrite_output_dir: true
 save_only_model: true
