@@ -1,0 +1,16 @@
+{
+    "added_tokens_decoder": {},
+    "auto_map": {
+      "AutoTokenizer": [
+        "tokenization_sigma.SigmaTokenizer",
+        "tokenization_sigma.SigmaTokenizer"
+      ]
+    },
+    "bos_token": "<|endoftext|>",
+    "chat_template": "{% if not add_generation_prompt is defined %}{% set add_generation_prompt = false %}{% endif %}{% for message in messages %}{{'<|im_start|>' + '<|' + message['role'] + '|>' + '\n' + message['content'] + '<|im_end|>' + '\n'}}{% endfor %}{% if add_generation_prompt %}{{ '<|im_start|><|assistant|>\n' }}{% endif %}",
+    "clean_up_tokenization_spaces": true,
+    "eos_token": "<|endoftext|>",
+    "model_max_length": 9999999999999999999999999999999999999999,
+    "pad_token": "<|endoftext|>",
+    "tokenizer_class": "SigmaTokenizer"
+  }
