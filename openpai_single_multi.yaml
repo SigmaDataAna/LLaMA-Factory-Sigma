@@ -30,10 +30,10 @@ taskRoles:
       # Config the env
       - pip install -e ".[torch,metrics,deepspeed]"
       # Set the environment variables
-      - export MASTER_ADDR=$PAI_HOST_IP_worker_0
-      - export MASTER_PORT=$PAI_PORT_LIST_worker_0_http
+      - export MASTER_ADDR=$PAI_HOST_IP_taskrole_0
+      - export MASTER_PORT=$PAI_PORT_LIST_taskrole_0_http
       - export GPU_PER_NODE_COUNT=8
-      - export AZUREML_NODE_COUNT=$PAI_TASK_ROLE_TASK_COUNT_worker
+      - export AZUREML_NODE_COUNT=$PAI_TASK_ROLE_TASK_COUNT_taskrole
       - export NODE_RANK=$PAI_CURRENT_TASK_ROLE_CURRENT_TASK_INDEX
       # Copy the data
       - bash install_azcopy.sh
