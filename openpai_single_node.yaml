@@ -1,0 +1,69 @@
+protocolVersion: 2
+name: llama_fac-sigma-17A3B-t1
+type: job
+jobRetryCount: 1
+prerequisites:
+  - type: dockerimage
+    uri: rocm/vllm:rocm6.3.1_instinct_vllm0.7.3_20250311
+    name: docker_image0
+taskRoles:
+  taskrole:
+    instances: 1
+    completion:
+      minFailedInstances: 1
+      minSucceededInstances: -1
+    taskRetryCount: 0
+    dockerImage: docker_image0
+    extraContainerOptions:
+      infiniband: true
+    resourcePerInstance:
+      gpu: 8
+      cpu: 88
+      memoryMB: 1638400
+    commands:
+      - rocm-smi
+      - df -h
+      - >-
+        git clone --depth 1
+        https://github.com/SigmaDataAna/LLaMA-Factory-Sigma.git
+      - cd LLaMA-Factory-Sigma
+      # Config the env
+      - pip install -e ".[torch,metrics,deepspeed]"
+      # Copy the data
+      - bash install_azcopy.sh
+      - /usr/local/bin/azcopy cp "https://hptrainingwestcentralus.blob.core.windows.net/pretraining/sigmav2_pretraining_corpus/20250225_processed/math/post_training/numina_math_cot.json?sv=2023-01-03&st=2025-04-10T02%3A44%3A24Z&se=2025-04-17T02%3A44%3A00Z&skoid=c80aa881-a750-442c-8c67-00b14c770a0b&sktid=72f988bf-86f1-41af-91ab-2d7cd011db47&skt=2025-04-10T02%3A44%3A24Z&ske=2025-04-17T02%3A44%3A00Z&sks=b&skv=2023-01-03&sr=c&sp=racwdxltf&sig=D7MY42BXx9bL7pxaI75e1aENtkWx2IHDKzMMec5%2B4hs%3D" ./data
+      # Copy the ckpt
+      - /usr/local/bin/azcopy cp "https://hptrainingwestcentralus.blob.core.windows.net/pretraining/checkpoints/OpenPAI-Pretrain-17BA3B-RoPE-HQ-0405/hf_iter_168000/?sv=2023-01-03&st=2025-04-10T02%3A44%3A24Z&se=2025-04-17T02%3A44%3A00Z&skoid=c80aa881-a750-442c-8c67-00b14c770a0b&sktid=72f988bf-86f1-41af-91ab-2d7cd011db47&skt=2025-04-10T02%3A44%3A24Z&ske=2025-04-17T02%3A44%3A00Z&sks=b&skv=2023-01-03&sr=c&sp=racwdxltf&sig=D7MY42BXx9bL7pxaI75e1aENtkWx2IHDKzMMec5%2B4hs%3D" . --recursive
+      # Start the training
+      - FORCE_TORCHRUN=1 llamafactory-cli train examples/sigma_17A3B_train.yaml
+defaults:
+  virtualCluster: sigma-mi300
+extras:
+  enableLocalStorage:
+    enabled: true
+    hostpath: /mntext/
+    mntpath: /paidata
+  hivedScheduler:
+    taskRoles:
+      taskrole:
+        skuNum: 8
+        skuType: MI300X
+  com.microsoft.pai.runtimeplugin:
+    - plugin: ssh
+      parameters:
+        jobssh: true
+        userssh:
+          type: custom
+          value: >-
+            ssh-ed25519
+            AAAAC3NzaC1lZDI1NTE5AAAAINJVZF97inwu7wjfUsaBChzzg6sqEJPOLP3e2tByKIN1
+            v-shaonanwu@microsoft.com
+    - plugin: teamwise_storage
+      parameters:
+        storageConfigNames:
+          - blob-pretraining-hptrainingwestcentralus
+          - blob-pretraining-hptrainingwestcentralus-out
+  jobStatusChangeNotification:
+    running: true
+    succeeded: true
+    failed: true
