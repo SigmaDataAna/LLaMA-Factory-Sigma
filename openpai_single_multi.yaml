@@ -1,5 +1,5 @@
 protocolVersion: 2
-name: llama_fac-sigma-17A3B-t1
+name: llama_fac-sigma-17A3B-multi-t1
 type: job
 jobRetryCount: 1
 prerequisites:
@@ -8,7 +8,7 @@ prerequisites:
     name: docker_image0
 taskRoles:
   taskrole:
-    instances: 1
+    instances: 4
     completion:
       minFailedInstances: 1
       minSucceededInstances: -1
@@ -29,16 +29,22 @@ taskRoles:
       - cd LLaMA-Factory-Sigma
       # Config the env
       - pip install -e ".[torch,metrics,deepspeed]"
+      # Set the environment variables
+      - export MASTER_ADDR=$PAI_HOST_IP_worker_0
+      - export MASTER_PORT=$PAI_PORT_LIST_worker_0_http
+      - export GPU_PER_NODE_COUNT=8
+      - export AZUREML_NODE_COUNT=$PAI_TASK_ROLE_TASK_COUNT_worker
+      - export NODE_RANK=$PAI_CURRENT_TASK_ROLE_CURRENT_TASK_INDEX
       # Copy the data
       - bash install_azcopy.sh
       - /usr/local/bin/azcopy cp "https://hptrainingwestcentralus.blob.core.windows.net/pretraining/sigmav2_pretraining_corpus/20250225_processed/math/post_training/numina_math_cot.json?sv=2023-01-03&st=2025-04-10T02%3A44%3A24Z&se=2025-04-17T02%3A44%3A00Z&skoid=c80aa881-a750-442c-8c67-00b14c770a0b&sktid=72f988bf-86f1-41af-91ab-2d7cd011db47&skt=2025-04-10T02%3A44%3A24Z&ske=2025-04-17T02%3A44%3A00Z&sks=b&skv=2023-01-03&sr=c&sp=racwdxltf&sig=D7MY42BXx9bL7pxaI75e1aENtkWx2IHDKzMMec5%2B4hs%3D" ./data
       # Copy the ckpt
       - /usr/local/bin/azcopy cp "https://hptrainingwestcentralus.blob.core.windows.net/pretraining/checkpoints/OpenPAI-Pretrain-17BA3B-RoPE-HQ-0405/hf_iter_168000/?sv=2023-01-03&st=2025-04-10T02%3A44%3A24Z&se=2025-04-17T02%3A44%3A00Z&skoid=c80aa881-a750-442c-8c67-00b14c770a0b&sktid=72f988bf-86f1-41af-91ab-2d7cd011db47&skt=2025-04-10T02%3A44%3A24Z&ske=2025-04-17T02%3A44%3A00Z&sks=b&skv=2023-01-03&sr=c&sp=racwdxltf&sig=D7MY42BXx9bL7pxaI75e1aENtkWx2IHDKzMMec5%2B4hs%3D" . --recursive
-      # update the model configs
+      # update the config files for ckpt
       - cp ./model_sigma_tiktoken/* ./hf_iter_168000
       - rm ./hf_iter_168000/generation_config.json
       # Start the training
-      - bash distributed_train.sh
+      - FORCE_TORCHRUN=1 llamafactory-cli train examples/sigma_17A3B_train.yaml
 defaults:
   virtualCluster: sigma-mi300
 extras:
