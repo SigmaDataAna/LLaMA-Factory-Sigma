@@ -704,5 +704,13 @@
       "prompt": "content"
     },
     "folder": "python"
+  },
+  "numina_math_cot": {
+    "file_name": "numina_math_cot.json",
+    "columns": {
+      "prompt": "instruction",
+      "query": "input",
+      "response": "output"
+    }
   }
 }

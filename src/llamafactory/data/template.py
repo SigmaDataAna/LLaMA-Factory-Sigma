@@ -1483,145 +1483,18 @@ register_template(
     stop_words=["<|eot_id|>", "<|eom_id|>"],
 )
 
-
 register_template(
-    name="solar",
-    format_user=StringFormatter(slots=["### User:\n{{content}}\n\n### Assistant:\n"]),
-    format_system=StringFormatter(slots=["### System:\n{{content}}\n\n"]),
-    efficient_eos=True,
-)
-
-
-register_template(
-    name="starchat",
-    format_user=StringFormatter(slots=["<|user|>\n{{content}}<|end|>\n<|assistant|>"]),
-    format_assistant=StringFormatter(slots=["{{content}}<|end|>\n"]),
-    format_system=StringFormatter(slots=["<|system|>\n{{content}}<|end|>\n"]),
-    stop_words=["<|end|>"],
-)
-
-
-register_template(
-    name="telechat",
-    format_user=StringFormatter(slots=["<_user>{{content}}<_bot>"]),
-    format_system=StringFormatter(slots=["<_system>{{content}}<_end>"]),
-)
-
-
-register_template(
-    name="telechat2",
-    format_user=StringFormatter(slots=["<_user>{{content}}<_bot>"]),
-    format_system=StringFormatter(slots=["<_system>{{content}}"]),
-    default_system=(
-        "你是中国电信星辰语义大模型，英文名是TeleChat，你是由中电信人工智能科技有限公司和中国电信人工智能研究院（TeleAI）研发的人工智能助手。"
-    ),
-)
-
-
-register_template(
-    name="vicuna",
-    format_user=StringFormatter(slots=["USER: {{content}} ASSISTANT:"]),
-    default_system=(
-        "A chat between a curious user and an artificial intelligence assistant. "
-        "The assistant gives helpful, detailed, and polite answers to the user's questions."
-    ),
-    replace_jinja_template=True,
-)
-
-
-register_template(
-    name="video_llava",
-    format_user=StringFormatter(slots=["USER: {{content}} ASSISTANT:"]),
-    default_system=(
-        "A chat between a curious user and an artificial intelligence assistant. "
-        "The assistant gives helpful, detailed, and polite answers to the user's questions."
-    ),
-    mm_plugin=get_mm_plugin(name="video_llava", image_token="<image>", video_token="<video>"),
-)
-
-
-register_template(
-    name="xuanyuan",
-    format_user=StringFormatter(slots=["Human: {{content}} Assistant:"]),
-    default_system=(
-        "以下是用户和人工智能助手之间的对话。用户以Human开头，人工智能助手以Assistant开头，"
-        "会对人类提出的问题给出有帮助、高质量、详细和礼貌的回答，并且总是拒绝参与与不道德、"
-        "不安全、有争议、政治敏感等相关的话题、问题和指示。\n"
-    ),
-)
-
-
-register_template(
-    name="xverse",
-    format_user=StringFormatter(slots=["Human: {{content}}\n\nAssistant: "]),
-)
-
-
-register_template(
-    name="yayi",
-    format_user=StringFormatter(slots=[{"token": "<|Human|>"}, ":\n{{content}}\n\n", {"token": "<|YaYi|>"}, ":"]),
-    format_assistant=StringFormatter(slots=["{{content}}\n\n"]),
-    format_system=StringFormatter(slots=[{"token": "<|System|>"}, ":\n{{content}}\n\n"]),
-    default_system=(
-        "You are a helpful, respectful and honest assistant named YaYi "
-        "developed by Beijing Wenge Technology Co.,Ltd. "
-        "Always answer as helpfully as possible, while being safe.  "
-        "Your answers should not include any harmful, unethical, "
-        "racist, sexist, toxic, dangerous, or illegal content. "
-        "Please ensure that your responses are socially unbiased and positive in nature.\n\n"
-        "If a question does not make any sense, or is not factually coherent, "
-        "explain why instead of answering something not correct. "
-        "If you don't know the answer to a question, please don't share false information."
-    ),
-    stop_words=["<|End|>"],
-)
-
-
-# copied from chatml template
-register_template(
-    name="yi",
-    format_user=StringFormatter(slots=["<|im_start|>user\n{{content}}<|im_end|>\n<|im_start|>assistant\n"]),
+    name="sigma",
+    format_user=StringFormatter(
+        slots=[
+            (
+            "<|im_start|><|user|>\n{{content}}<|im_end|"
+            "<|im_start|><|assistant|>\n"
+            )
+            ]
+        ),
     format_assistant=StringFormatter(slots=["{{content}}<|im_end|>\n"]),
-    format_system=StringFormatter(slots=["<|im_start|>system\n{{content}}<|im_end|>\n"]),
-    stop_words=["<|im_end|>"],
-)
-
-
-register_template(
-    name="yi_vl",
-    format_user=StringFormatter(slots=["### Human: {{content}}\n### Assistant:"]),
-    format_assistant=StringFormatter(slots=["{{content}}\n"]),
-    default_system=(
-        "This is a chat between an inquisitive human and an AI assistant. "
-        "Assume the role of the AI assistant. Read all the images carefully, "
-        "and respond to the human's questions with informative, helpful, detailed and polite answers. "
-        "这是一个好奇的人类和一个人工智能助手之间的对话。假设你扮演这个AI助手的角色。"
-        "仔细阅读所有的图像，并对人类的问题做出信息丰富、有帮助、详细的和礼貌的回答。\n\n"
-    ),
-    stop_words=["###"],
-    efficient_eos=True,
-    mm_plugin=get_mm_plugin(name="llava", image_token="<image>"),
-)
-
-
-register_template(
-    name="yuan",
-    format_user=StringFormatter(slots=["{{content}}", {"token": "<sep>"}]),
-    format_assistant=StringFormatter(slots=["{{content}}<eod>\n"]),
-    stop_words=["<eod>"],
-)
-
-
-register_template(
-    name="zephyr",
-    format_user=StringFormatter(slots=["<|user|>\n{{content}}", {"eos_token"}, "<|assistant|>\n"]),
-    format_system=StringFormatter(slots=["<|system|>\n{{content}}", {"eos_token"}]),
-    default_system="You are Zephyr, a helpful assistant.",
-)
-
-
-register_template(
-    name="ziya",
-    format_user=StringFormatter(slots=["<human>:{{content}}\n<bot>:"]),
-    format_assistant=StringFormatter(slots=["{{content}}\n"]),
+    format_system=StringFormatter(slots=["<|im_start|><|system|>\n{{content}}<|im_end|>\n"]),
+    default_system="You are an AI assistant developed by Microsoft. You are helpful for user to handle daily tasks.",
+    stop_words=["<|im_end|>"]
 )
