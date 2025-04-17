@@ -147,7 +147,6 @@ class SigmaMoE(nn.Module):
             hidden_states = hidden_states.repeat_interleave(   
                 self.num_experts_per_tok, dim=0
             )
-            print(f"hidden_states: {hidden_states.shape}")
             y = torch.empty_like(hidden_states)
             for i, expert in enumerate(self.experts):
                 y[flat_topk_idx == i] = expert(hidden_states[flat_topk_idx == i])
@@ -255,17 +254,52 @@ class SigmaMoE_Acce(nn.Module):
             y = y + self.shared_experts(identity)
         return y
 
+def transform_moe(moe, config):
+    '''
+    Transform the SigmaMoE model architecture into the SigmaMoE_Acce model architecture
+    '''
+    moe_acce = SigmaMoE_Acce(config)
+    moe_acce.gate = MoEGate(config)
+    moe_acce.gate.load_state_dict(moe.gate.state_dict())
+    # Transform the experts (Concat the experts togother)
+    gate_mlps = []
+    up_projs = []
+    down_projs = []
+
+    for i in range(config.n_routed_experts):
+        gate_mlps.append(moe.experts[i].gate_proj)
+        up_projs.append(moe.experts[i].up_proj)
+        down_projs.append(moe.experts[i].down_proj)
+    
+    gate_mlps = torch.stack([gate_mlp.weight.permute(1, 0) for gate_mlp in gate_mlps])
+    up_projs = torch.stack([up_proj.weight.permute(1, 0) for up_proj in up_projs])
+    down_projs = torch.stack([down_proj.weight.permute(1, 0) for down_proj in down_projs])
+    moe_acce.experts.gate_proj = nn.Parameter(gate_mlps)
+    print(f"gate_mlps: {moe_acce.experts.gate_proj.shape}")
+    moe_acce.experts.up_proj = nn.Parameter(up_projs)
+    moe_acce.experts.down_proj = nn.Parameter(down_projs)
+
+    # Transform the shared experts
+    # For the shared experts module (if it exists)
+    if hasattr(moe, 'shared_experts') and moe.shared_experts is not None:
+        moe_acce.shared_experts = SigmaMLP(config=config, intermediate_size=config.moe_intermediate_size * config.n_shared_experts)
+        moe_acce.shared_experts.load_state_dict(moe.shared_experts.state_dict())
+
+    return moe_acce
+
 
 if __name__ == "__main__":
     from transformers import AutoConfig
 
     config = AutoConfig.from_pretrained("model_sigma_tiktoken", trust_remote_code=True)
     # initialize the moe module
-    moe = SigmaMoE(config).to("cuda:0")
-    moe_acce = SigmaMoE_Acce(config).to("cuda:1")
+    moe = SigmaMoE(config)
+    moe_acce = transform_moe(moe, config)
+    moe = moe.to("cuda:0")
+    moe_acce = moe_acce.to("cuda:1")
 
     hidden_states = torch.randn(2, 4096, 2048).to("cuda:0")
-    hidden_states_acce = hidden_states.to("cuda:1")
+    hidden_states_acce = hidden_states.clone().to("cuda:1")
 
     with profiler.profile(
         activities=[profiler.ProfilerActivity.CPU, profiler.ProfilerActivity.CUDA],
@@ -277,5 +311,6 @@ if __name__ == "__main__":
 
         print(output)
         print(output_2)
+        assert torch.allclose(output.detach().cpu(), output_2.detach().cpu(), rtol=1e-5, atol=1e-5), f"Output mismatch: max difference {(output.detach().cpu() - output_2.detach().cpu()).abs().max()}"
 
     # print(prof.key_averages().table(sort_by="cuda_memory_usage", row_limit=10))

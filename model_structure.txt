@@ -1,0 +1,772 @@
+SigmaForCausalLM(
+  (model): SigmaModel(
+    (embed_tokens): Embedding(200064, 2048)
+    (layers): ModuleList(
+      (0): SigmaDecoderLayer(
+        (self_attn): LlamaAttention(
+          (q_proj): Linear(in_features=2048, out_features=2048, bias=False)
+          (k_proj): Linear(in_features=2048, out_features=2048, bias=False)
+          (v_proj): Linear(in_features=2048, out_features=2048, bias=False)
+          (o_proj): Linear(in_features=2048, out_features=2048, bias=False)
+        )
+        (mlp): SigmaMLP(
+          (gate_proj): Linear(in_features=2048, out_features=7168, bias=False)
+          (up_proj): Linear(in_features=2048, out_features=7168, bias=False)
+          (down_proj): Linear(in_features=7168, out_features=2048, bias=False)
+          (act_fn): SiLU()
+        )
+        (input_layernorm): SigmaRMSNorm()
+        (post_attention_layernorm): SigmaRMSNorm()
+      )
+      (1): SigmaDecoderLayer(
+        (self_attn): SigmaFlashAttention2(
+          (q_proj): Linear(in_features=2048, out_features=2048, bias=False)
+          (kv_a_proj_with_mqa): Linear(in_features=2048, out_features=544, bias=False)
+          (kv_a_layernorm): SigmaRMSNorm()
+          (kv_b_proj): Linear(in_features=512, out_features=3584, bias=False)
+          (o_proj): Linear(in_features=2048, out_features=2048, bias=False)
+          (rotary_emb): SigmaYarnRotaryEmbedding()
+        )
+        (mlp): SigmaMLP(
+          (gate_proj): Linear(in_features=2048, out_features=7168, bias=False)
+          (up_proj): Linear(in_features=2048, out_features=7168, bias=False)
+          (down_proj): Linear(in_features=7168, out_features=2048, bias=False)
+          (act_fn): SiLU()
+        )
+        (input_layernorm): SigmaRMSNorm()
+        (post_attention_layernorm): SigmaRMSNorm()
+      )
+      (2): SigmaDecoderLayer(
+        (self_attn): LlamaAttention(
+          (q_proj): Linear(in_features=2048, out_features=2048, bias=False)
+          (k_proj): Linear(in_features=2048, out_features=2048, bias=False)
+          (v_proj): Linear(in_features=2048, out_features=2048, bias=False)
+          (o_proj): Linear(in_features=2048, out_features=2048, bias=False)
+        )
+        (mlp): SigmaMoE(
+          (experts): ModuleList(
+            (0-63): 64 x SigmaMLP(
+              (gate_proj): Linear(in_features=2048, out_features=1536, bias=False)
+              (up_proj): Linear(in_features=2048, out_features=1536, bias=False)
+              (down_proj): Linear(in_features=1536, out_features=2048, bias=False)
+              (act_fn): SiLU()
+            )
+          )
+          (gate): MoEGate()
+          (shared_experts): SigmaMLP(
+            (gate_proj): Linear(in_features=2048, out_features=4608, bias=False)
+            (up_proj): Linear(in_features=2048, out_features=4608, bias=False)
+            (down_proj): Linear(in_features=4608, out_features=2048, bias=False)
+            (act_fn): SiLU()
+          )
+        )
+        (input_layernorm): SigmaRMSNorm()
+        (post_attention_layernorm): SigmaRMSNorm()
+      )
+      (3): SigmaDecoderLayer(
+        (self_attn): SigmaFlashAttention2(
+          (q_proj): Linear(in_features=2048, out_features=2048, bias=False)
+          (kv_a_proj_with_mqa): Linear(in_features=2048, out_features=544, bias=False)
+          (kv_a_layernorm): SigmaRMSNorm()
+          (kv_b_proj): Linear(in_features=512, out_features=3584, bias=False)
+          (o_proj): Linear(in_features=2048, out_features=2048, bias=False)
+          (rotary_emb): SigmaYarnRotaryEmbedding()
+        )
+        (mlp): SigmaMoE(
+          (experts): ModuleList(
+            (0-63): 64 x SigmaMLP(
+              (gate_proj): Linear(in_features=2048, out_features=1536, bias=False)
+              (up_proj): Linear(in_features=2048, out_features=1536, bias=False)
+              (down_proj): Linear(in_features=1536, out_features=2048, bias=False)
+              (act_fn): SiLU()
+            )
+          )
+          (gate): MoEGate()
+          (shared_experts): SigmaMLP(
+            (gate_proj): Linear(in_features=2048, out_features=4608, bias=False)
+            (up_proj): Linear(in_features=2048, out_features=4608, bias=False)
+            (down_proj): Linear(in_features=4608, out_features=2048, bias=False)
+            (act_fn): SiLU()
+          )
+        )
+        (input_layernorm): SigmaRMSNorm()
+        (post_attention_layernorm): SigmaRMSNorm()
+      )
+      (4): SigmaDecoderLayer(
+        (self_attn): LlamaAttention(
+          (q_proj): Linear(in_features=2048, out_features=2048, bias=False)
+          (k_proj): Linear(in_features=2048, out_features=2048, bias=False)
+          (v_proj): Linear(in_features=2048, out_features=2048, bias=False)
+          (o_proj): Linear(in_features=2048, out_features=2048, bias=False)
+        )
+        (mlp): SigmaMoE(
+          (experts): ModuleList(
+            (0-63): 64 x SigmaMLP(
+              (gate_proj): Linear(in_features=2048, out_features=1536, bias=False)
+              (up_proj): Linear(in_features=2048, out_features=1536, bias=False)
+              (down_proj): Linear(in_features=1536, out_features=2048, bias=False)
+              (act_fn): SiLU()
+            )
+          )
+          (gate): MoEGate()
+          (shared_experts): SigmaMLP(
+            (gate_proj): Linear(in_features=2048, out_features=4608, bias=False)
+            (up_proj): Linear(in_features=2048, out_features=4608, bias=False)
+            (down_proj): Linear(in_features=4608, out_features=2048, bias=False)
+            (act_fn): SiLU()
+          )
+        )
+        (input_layernorm): SigmaRMSNorm()
+        (post_attention_layernorm): SigmaRMSNorm()
+      )
+      (5): SigmaDecoderLayer(
+        (self_attn): SigmaFlashAttention2(
+          (q_proj): Linear(in_features=2048, out_features=2048, bias=False)
+          (kv_a_proj_with_mqa): Linear(in_features=2048, out_features=544, bias=False)
+          (kv_a_layernorm): SigmaRMSNorm()
+          (kv_b_proj): Linear(in_features=512, out_features=3584, bias=False)
+          (o_proj): Linear(in_features=2048, out_features=2048, bias=False)
+          (rotary_emb): SigmaYarnRotaryEmbedding()
+        )
+        (mlp): SigmaMoE(
+          (experts): ModuleList(
+            (0-63): 64 x SigmaMLP(
+              (gate_proj): Linear(in_features=2048, out_features=1536, bias=False)
+              (up_proj): Linear(in_features=2048, out_features=1536, bias=False)
+              (down_proj): Linear(in_features=1536, out_features=2048, bias=False)
+              (act_fn): SiLU()
+            )
+          )
+          (gate): MoEGate()
+          (shared_experts): SigmaMLP(
+            (gate_proj): Linear(in_features=2048, out_features=4608, bias=False)
+            (up_proj): Linear(in_features=2048, out_features=4608, bias=False)
+            (down_proj): Linear(in_features=4608, out_features=2048, bias=False)
+            (act_fn): SiLU()
+          )
+        )
+        (input_layernorm): SigmaRMSNorm()
+        (post_attention_layernorm): SigmaRMSNorm()
+      )
+      (6): SigmaDecoderLayer(
+        (self_attn): LlamaAttention(
+          (q_proj): Linear(in_features=2048, out_features=2048, bias=False)
+          (k_proj): Linear(in_features=2048, out_features=2048, bias=False)
+          (v_proj): Linear(in_features=2048, out_features=2048, bias=False)
+          (o_proj): Linear(in_features=2048, out_features=2048, bias=False)
+        )
+        (mlp): SigmaMoE(
+          (experts): ModuleList(
+            (0-63): 64 x SigmaMLP(
+              (gate_proj): Linear(in_features=2048, out_features=1536, bias=False)
+              (up_proj): Linear(in_features=2048, out_features=1536, bias=False)
+              (down_proj): Linear(in_features=1536, out_features=2048, bias=False)
+              (act_fn): SiLU()
+            )
+          )
+          (gate): MoEGate()
+          (shared_experts): SigmaMLP(
+            (gate_proj): Linear(in_features=2048, out_features=4608, bias=False)
+            (up_proj): Linear(in_features=2048, out_features=4608, bias=False)
+            (down_proj): Linear(in_features=4608, out_features=2048, bias=False)
+            (act_fn): SiLU()
+          )
+        )
+        (input_layernorm): SigmaRMSNorm()
+        (post_attention_layernorm): SigmaRMSNorm()
+      )
+      (7): SigmaDecoderLayer(
+        (self_attn): SigmaFlashAttention2(
+          (q_proj): Linear(in_features=2048, out_features=2048, bias=False)
+          (kv_a_proj_with_mqa): Linear(in_features=2048, out_features=544, bias=False)
+          (kv_a_layernorm): SigmaRMSNorm()
+          (kv_b_proj): Linear(in_features=512, out_features=3584, bias=False)
+          (o_proj): Linear(in_features=2048, out_features=2048, bias=False)
+          (rotary_emb): SigmaYarnRotaryEmbedding()
+        )
+        (mlp): SigmaMoE(
+          (experts): ModuleList(
+            (0-63): 64 x SigmaMLP(
+              (gate_proj): Linear(in_features=2048, out_features=1536, bias=False)
+              (up_proj): Linear(in_features=2048, out_features=1536, bias=False)
+              (down_proj): Linear(in_features=1536, out_features=2048, bias=False)
+              (act_fn): SiLU()
+            )
+          )
+          (gate): MoEGate()
+          (shared_experts): SigmaMLP(
+            (gate_proj): Linear(in_features=2048, out_features=4608, bias=False)
+            (up_proj): Linear(in_features=2048, out_features=4608, bias=False)
+            (down_proj): Linear(in_features=4608, out_features=2048, bias=False)
+            (act_fn): SiLU()
+          )
+        )
+        (input_layernorm): SigmaRMSNorm()
+        (post_attention_layernorm): SigmaRMSNorm()
+      )
+      (8): SigmaDecoderLayer(
+        (self_attn): LlamaAttention(
+          (q_proj): Linear(in_features=2048, out_features=2048, bias=False)
+          (k_proj): Linear(in_features=2048, out_features=2048, bias=False)
+          (v_proj): Linear(in_features=2048, out_features=2048, bias=False)
+          (o_proj): Linear(in_features=2048, out_features=2048, bias=False)
+        )
+        (mlp): SigmaMoE(
+          (experts): ModuleList(
+            (0-63): 64 x SigmaMLP(
+              (gate_proj): Linear(in_features=2048, out_features=1536, bias=False)
+              (up_proj): Linear(in_features=2048, out_features=1536, bias=False)
+              (down_proj): Linear(in_features=1536, out_features=2048, bias=False)
+              (act_fn): SiLU()
+            )
+          )
+          (gate): MoEGate()
+          (shared_experts): SigmaMLP(
+            (gate_proj): Linear(in_features=2048, out_features=4608, bias=False)
+            (up_proj): Linear(in_features=2048, out_features=4608, bias=False)
+            (down_proj): Linear(in_features=4608, out_features=2048, bias=False)
+            (act_fn): SiLU()
+          )
+        )
+        (input_layernorm): SigmaRMSNorm()
+        (post_attention_layernorm): SigmaRMSNorm()
+      )
+      (9): SigmaDecoderLayer(
+        (self_attn): SigmaFlashAttention2(
+          (q_proj): Linear(in_features=2048, out_features=2048, bias=False)
+          (kv_a_proj_with_mqa): Linear(in_features=2048, out_features=544, bias=False)
+          (kv_a_layernorm): SigmaRMSNorm()
+          (kv_b_proj): Linear(in_features=512, out_features=3584, bias=False)
+          (o_proj): Linear(in_features=2048, out_features=2048, bias=False)
+          (rotary_emb): SigmaYarnRotaryEmbedding()
+        )
+        (mlp): SigmaMoE(
+          (experts): ModuleList(
+            (0-63): 64 x SigmaMLP(
+              (gate_proj): Linear(in_features=2048, out_features=1536, bias=False)
+              (up_proj): Linear(in_features=2048, out_features=1536, bias=False)
+              (down_proj): Linear(in_features=1536, out_features=2048, bias=False)
+              (act_fn): SiLU()
+            )
+          )
+          (gate): MoEGate()
+          (shared_experts): SigmaMLP(
+            (gate_proj): Linear(in_features=2048, out_features=4608, bias=False)
+            (up_proj): Linear(in_features=2048, out_features=4608, bias=False)
+            (down_proj): Linear(in_features=4608, out_features=2048, bias=False)
+            (act_fn): SiLU()
+          )
+        )
+        (input_layernorm): SigmaRMSNorm()
+        (post_attention_layernorm): SigmaRMSNorm()
+      )
+      (10): SigmaDecoderLayer(
+        (self_attn): LlamaAttention(
+          (q_proj): Linear(in_features=2048, out_features=2048, bias=False)
+          (k_proj): Linear(in_features=2048, out_features=2048, bias=False)
+          (v_proj): Linear(in_features=2048, out_features=2048, bias=False)
+          (o_proj): Linear(in_features=2048, out_features=2048, bias=False)
+        )
+        (mlp): SigmaMoE(
+          (experts): ModuleList(
+            (0-63): 64 x SigmaMLP(
+              (gate_proj): Linear(in_features=2048, out_features=1536, bias=False)
+              (up_proj): Linear(in_features=2048, out_features=1536, bias=False)
+              (down_proj): Linear(in_features=1536, out_features=2048, bias=False)
+              (act_fn): SiLU()
+            )
+          )
+          (gate): MoEGate()
+          (shared_experts): SigmaMLP(
+            (gate_proj): Linear(in_features=2048, out_features=4608, bias=False)
+            (up_proj): Linear(in_features=2048, out_features=4608, bias=False)
+            (down_proj): Linear(in_features=4608, out_features=2048, bias=False)
+            (act_fn): SiLU()
+          )
+        )
+        (input_layernorm): SigmaRMSNorm()
+        (post_attention_layernorm): SigmaRMSNorm()
+      )
+      (11): SigmaDecoderLayer(
+        (self_attn): SigmaFlashAttention2(
+          (q_proj): Linear(in_features=2048, out_features=2048, bias=False)
+          (kv_a_proj_with_mqa): Linear(in_features=2048, out_features=544, bias=False)
+          (kv_a_layernorm): SigmaRMSNorm()
+          (kv_b_proj): Linear(in_features=512, out_features=3584, bias=False)
+          (o_proj): Linear(in_features=2048, out_features=2048, bias=False)
+          (rotary_emb): SigmaYarnRotaryEmbedding()
+        )
+        (mlp): SigmaMoE(
+          (experts): ModuleList(
+            (0-63): 64 x SigmaMLP(
+              (gate_proj): Linear(in_features=2048, out_features=1536, bias=False)
+              (up_proj): Linear(in_features=2048, out_features=1536, bias=False)
+              (down_proj): Linear(in_features=1536, out_features=2048, bias=False)
+              (act_fn): SiLU()
+            )
+          )
+          (gate): MoEGate()
+          (shared_experts): SigmaMLP(
+            (gate_proj): Linear(in_features=2048, out_features=4608, bias=False)
+            (up_proj): Linear(in_features=2048, out_features=4608, bias=False)
+            (down_proj): Linear(in_features=4608, out_features=2048, bias=False)
+            (act_fn): SiLU()
+          )
+        )
+        (input_layernorm): SigmaRMSNorm()
+        (post_attention_layernorm): SigmaRMSNorm()
+      )
+      (12): SigmaDecoderLayer(
+        (self_attn): LlamaAttention(
+          (q_proj): Linear(in_features=2048, out_features=2048, bias=False)
+          (k_proj): Linear(in_features=2048, out_features=2048, bias=False)
+          (v_proj): Linear(in_features=2048, out_features=2048, bias=False)
+          (o_proj): Linear(in_features=2048, out_features=2048, bias=False)
+        )
+        (mlp): SigmaMoE(
+          (experts): ModuleList(
+            (0-63): 64 x SigmaMLP(
+              (gate_proj): Linear(in_features=2048, out_features=1536, bias=False)
+              (up_proj): Linear(in_features=2048, out_features=1536, bias=False)
+              (down_proj): Linear(in_features=1536, out_features=2048, bias=False)
+              (act_fn): SiLU()
+            )
+          )
+          (gate): MoEGate()
+          (shared_experts): SigmaMLP(
+            (gate_proj): Linear(in_features=2048, out_features=4608, bias=False)
+            (up_proj): Linear(in_features=2048, out_features=4608, bias=False)
+            (down_proj): Linear(in_features=4608, out_features=2048, bias=False)
+            (act_fn): SiLU()
+          )
+        )
+        (input_layernorm): SigmaRMSNorm()
+        (post_attention_layernorm): SigmaRMSNorm()
+      )
+      (13): SigmaDecoderLayer(
+        (self_attn): SigmaFlashAttention2(
+          (q_proj): Linear(in_features=2048, out_features=2048, bias=False)
+          (kv_a_proj_with_mqa): Linear(in_features=2048, out_features=544, bias=False)
+          (kv_a_layernorm): SigmaRMSNorm()
+          (kv_b_proj): Linear(in_features=512, out_features=3584, bias=False)
+          (o_proj): Linear(in_features=2048, out_features=2048, bias=False)
+          (rotary_emb): SigmaYarnRotaryEmbedding()
+        )
+        (mlp): SigmaMoE(
+          (experts): ModuleList(
+            (0-63): 64 x SigmaMLP(
+              (gate_proj): Linear(in_features=2048, out_features=1536, bias=False)
+              (up_proj): Linear(in_features=2048, out_features=1536, bias=False)
+              (down_proj): Linear(in_features=1536, out_features=2048, bias=False)
+              (act_fn): SiLU()
+            )
+          )
+          (gate): MoEGate()
+          (shared_experts): SigmaMLP(
+            (gate_proj): Linear(in_features=2048, out_features=4608, bias=False)
+            (up_proj): Linear(in_features=2048, out_features=4608, bias=False)
+            (down_proj): Linear(in_features=4608, out_features=2048, bias=False)
+            (act_fn): SiLU()
+          )
+        )
+        (input_layernorm): SigmaRMSNorm()
+        (post_attention_layernorm): SigmaRMSNorm()
+      )
+      (14): SigmaDecoderLayer(
+        (self_attn): LlamaAttention(
+          (q_proj): Linear(in_features=2048, out_features=2048, bias=False)
+          (k_proj): Linear(in_features=2048, out_features=2048, bias=False)
+          (v_proj): Linear(in_features=2048, out_features=2048, bias=False)
+          (o_proj): Linear(in_features=2048, out_features=2048, bias=False)
+        )
+        (mlp): SigmaMoE(
+          (experts): ModuleList(
+            (0-63): 64 x SigmaMLP(
+              (gate_proj): Linear(in_features=2048, out_features=1536, bias=False)
+              (up_proj): Linear(in_features=2048, out_features=1536, bias=False)
+              (down_proj): Linear(in_features=1536, out_features=2048, bias=False)
+              (act_fn): SiLU()
+            )
+          )
+          (gate): MoEGate()
+          (shared_experts): SigmaMLP(
+            (gate_proj): Linear(in_features=2048, out_features=4608, bias=False)
+            (up_proj): Linear(in_features=2048, out_features=4608, bias=False)
+            (down_proj): Linear(in_features=4608, out_features=2048, bias=False)
+            (act_fn): SiLU()
+          )
+        )
+        (input_layernorm): SigmaRMSNorm()
+        (post_attention_layernorm): SigmaRMSNorm()
+      )
+      (15): SigmaDecoderLayer(
+        (self_attn): SigmaFlashAttention2(
+          (q_proj): Linear(in_features=2048, out_features=2048, bias=False)
+          (kv_a_proj_with_mqa): Linear(in_features=2048, out_features=544, bias=False)
+          (kv_a_layernorm): SigmaRMSNorm()
+          (kv_b_proj): Linear(in_features=512, out_features=3584, bias=False)
+          (o_proj): Linear(in_features=2048, out_features=2048, bias=False)
+          (rotary_emb): SigmaYarnRotaryEmbedding()
+        )
+        (mlp): SigmaMoE(
+          (experts): ModuleList(
+            (0-63): 64 x SigmaMLP(
+              (gate_proj): Linear(in_features=2048, out_features=1536, bias=False)
+              (up_proj): Linear(in_features=2048, out_features=1536, bias=False)
+              (down_proj): Linear(in_features=1536, out_features=2048, bias=False)
+              (act_fn): SiLU()
+            )
+          )
+          (gate): MoEGate()
+          (shared_experts): SigmaMLP(
+            (gate_proj): Linear(in_features=2048, out_features=4608, bias=False)
+            (up_proj): Linear(in_features=2048, out_features=4608, bias=False)
+            (down_proj): Linear(in_features=4608, out_features=2048, bias=False)
+            (act_fn): SiLU()
+          )
+        )
+        (input_layernorm): SigmaRMSNorm()
+        (post_attention_layernorm): SigmaRMSNorm()
+      )
+      (16): SigmaDecoderLayer(
+        (self_attn): LlamaAttention(
+          (q_proj): Linear(in_features=2048, out_features=2048, bias=False)
+          (k_proj): Linear(in_features=2048, out_features=2048, bias=False)
+          (v_proj): Linear(in_features=2048, out_features=2048, bias=False)
+          (o_proj): Linear(in_features=2048, out_features=2048, bias=False)
+        )
+        (mlp): SigmaMoE(
+          (experts): ModuleList(
+            (0-63): 64 x SigmaMLP(
+              (gate_proj): Linear(in_features=2048, out_features=1536, bias=False)
+              (up_proj): Linear(in_features=2048, out_features=1536, bias=False)
+              (down_proj): Linear(in_features=1536, out_features=2048, bias=False)
+              (act_fn): SiLU()
+            )
+          )
+          (gate): MoEGate()
+          (shared_experts): SigmaMLP(
+            (gate_proj): Linear(in_features=2048, out_features=4608, bias=False)
+            (up_proj): Linear(in_features=2048, out_features=4608, bias=False)
+            (down_proj): Linear(in_features=4608, out_features=2048, bias=False)
+            (act_fn): SiLU()
+          )
+        )
+        (input_layernorm): SigmaRMSNorm()
+        (post_attention_layernorm): SigmaRMSNorm()
+      )
+      (17): SigmaDecoderLayer(
+        (self_attn): SigmaFlashAttention2(
+          (q_proj): Linear(in_features=2048, out_features=2048, bias=False)
+          (kv_a_proj_with_mqa): Linear(in_features=2048, out_features=544, bias=False)
+          (kv_a_layernorm): SigmaRMSNorm()
+          (kv_b_proj): Linear(in_features=512, out_features=3584, bias=False)
+          (o_proj): Linear(in_features=2048, out_features=2048, bias=False)
+          (rotary_emb): SigmaYarnRotaryEmbedding()
+        )
+        (mlp): SigmaMoE(
+          (experts): ModuleList(
+            (0-63): 64 x SigmaMLP(
+              (gate_proj): Linear(in_features=2048, out_features=1536, bias=False)
+              (up_proj): Linear(in_features=2048, out_features=1536, bias=False)
+              (down_proj): Linear(in_features=1536, out_features=2048, bias=False)
+              (act_fn): SiLU()
+            )
+          )
+          (gate): MoEGate()
+          (shared_experts): SigmaMLP(
+            (gate_proj): Linear(in_features=2048, out_features=4608, bias=False)
+            (up_proj): Linear(in_features=2048, out_features=4608, bias=False)
+            (down_proj): Linear(in_features=4608, out_features=2048, bias=False)
+            (act_fn): SiLU()
+          )
+        )
+        (input_layernorm): SigmaRMSNorm()
+        (post_attention_layernorm): SigmaRMSNorm()
+      )
+      (18): SigmaDecoderLayer(
+        (self_attn): LlamaAttention(
+          (q_proj): Linear(in_features=2048, out_features=2048, bias=False)
+          (k_proj): Linear(in_features=2048, out_features=2048, bias=False)
+          (v_proj): Linear(in_features=2048, out_features=2048, bias=False)
+          (o_proj): Linear(in_features=2048, out_features=2048, bias=False)
+        )
+        (mlp): SigmaMoE(
+          (experts): ModuleList(
+            (0-63): 64 x SigmaMLP(
+              (gate_proj): Linear(in_features=2048, out_features=1536, bias=False)
+              (up_proj): Linear(in_features=2048, out_features=1536, bias=False)
+              (down_proj): Linear(in_features=1536, out_features=2048, bias=False)
+              (act_fn): SiLU()
+            )
+          )
+          (gate): MoEGate()
+          (shared_experts): SigmaMLP(
+            (gate_proj): Linear(in_features=2048, out_features=4608, bias=False)
+            (up_proj): Linear(in_features=2048, out_features=4608, bias=False)
+            (down_proj): Linear(in_features=4608, out_features=2048, bias=False)
+            (act_fn): SiLU()
+          )
+        )
+        (input_layernorm): SigmaRMSNorm()
+        (post_attention_layernorm): SigmaRMSNorm()
+      )
+      (19): SigmaDecoderLayer(
+        (self_attn): SigmaFlashAttention2(
+          (q_proj): Linear(in_features=2048, out_features=2048, bias=False)
+          (kv_a_proj_with_mqa): Linear(in_features=2048, out_features=544, bias=False)
+          (kv_a_layernorm): SigmaRMSNorm()
+          (kv_b_proj): Linear(in_features=512, out_features=3584, bias=False)
+          (o_proj): Linear(in_features=2048, out_features=2048, bias=False)
+          (rotary_emb): SigmaYarnRotaryEmbedding()
+        )
+        (mlp): SigmaMoE(
+          (experts): ModuleList(
+            (0-63): 64 x SigmaMLP(
+              (gate_proj): Linear(in_features=2048, out_features=1536, bias=False)
+              (up_proj): Linear(in_features=2048, out_features=1536, bias=False)
+              (down_proj): Linear(in_features=1536, out_features=2048, bias=False)
+              (act_fn): SiLU()
+            )
+          )
+          (gate): MoEGate()
+          (shared_experts): SigmaMLP(
+            (gate_proj): Linear(in_features=2048, out_features=4608, bias=False)
+            (up_proj): Linear(in_features=2048, out_features=4608, bias=False)
+            (down_proj): Linear(in_features=4608, out_features=2048, bias=False)
+            (act_fn): SiLU()
+          )
+        )
+        (input_layernorm): SigmaRMSNorm()
+        (post_attention_layernorm): SigmaRMSNorm()
+      )
+      (20): SigmaDecoderLayer(
+        (self_attn): LlamaAttention(
+          (q_proj): Linear(in_features=2048, out_features=2048, bias=False)
+          (k_proj): Linear(in_features=2048, out_features=2048, bias=False)
+          (v_proj): Linear(in_features=2048, out_features=2048, bias=False)
+          (o_proj): Linear(in_features=2048, out_features=2048, bias=False)
+        )
+        (mlp): SigmaMoE(
+          (experts): ModuleList(
+            (0-63): 64 x SigmaMLP(
+              (gate_proj): Linear(in_features=2048, out_features=1536, bias=False)
+              (up_proj): Linear(in_features=2048, out_features=1536, bias=False)
+              (down_proj): Linear(in_features=1536, out_features=2048, bias=False)
+              (act_fn): SiLU()
+            )
+          )
+          (gate): MoEGate()
+          (shared_experts): SigmaMLP(
+            (gate_proj): Linear(in_features=2048, out_features=4608, bias=False)
+            (up_proj): Linear(in_features=2048, out_features=4608, bias=False)
+            (down_proj): Linear(in_features=4608, out_features=2048, bias=False)
+            (act_fn): SiLU()
+          )
+        )
+        (input_layernorm): SigmaRMSNorm()
+        (post_attention_layernorm): SigmaRMSNorm()
+      )
+      (21): SigmaDecoderLayer(
+        (self_attn): SigmaFlashAttention2(
+          (q_proj): Linear(in_features=2048, out_features=2048, bias=False)
+          (kv_a_proj_with_mqa): Linear(in_features=2048, out_features=544, bias=False)
+          (kv_a_layernorm): SigmaRMSNorm()
+          (kv_b_proj): Linear(in_features=512, out_features=3584, bias=False)
+          (o_proj): Linear(in_features=2048, out_features=2048, bias=False)
+          (rotary_emb): SigmaYarnRotaryEmbedding()
+        )
+        (mlp): SigmaMoE(
+          (experts): ModuleList(
+            (0-63): 64 x SigmaMLP(
+              (gate_proj): Linear(in_features=2048, out_features=1536, bias=False)
+              (up_proj): Linear(in_features=2048, out_features=1536, bias=False)
+              (down_proj): Linear(in_features=1536, out_features=2048, bias=False)
+              (act_fn): SiLU()
+            )
+          )
+          (gate): MoEGate()
+          (shared_experts): SigmaMLP(
+            (gate_proj): Linear(in_features=2048, out_features=4608, bias=False)
+            (up_proj): Linear(in_features=2048, out_features=4608, bias=False)
+            (down_proj): Linear(in_features=4608, out_features=2048, bias=False)
+            (act_fn): SiLU()
+          )
+        )
+        (input_layernorm): SigmaRMSNorm()
+        (post_attention_layernorm): SigmaRMSNorm()
+      )
+      (22): SigmaDecoderLayer(
+        (self_attn): LlamaAttention(
+          (q_proj): Linear(in_features=2048, out_features=2048, bias=False)
+          (k_proj): Linear(in_features=2048, out_features=2048, bias=False)
+          (v_proj): Linear(in_features=2048, out_features=2048, bias=False)
+          (o_proj): Linear(in_features=2048, out_features=2048, bias=False)
+        )
+        (mlp): SigmaMoE(
+          (experts): ModuleList(
+            (0-63): 64 x SigmaMLP(
+              (gate_proj): Linear(in_features=2048, out_features=1536, bias=False)
+              (up_proj): Linear(in_features=2048, out_features=1536, bias=False)
+              (down_proj): Linear(in_features=1536, out_features=2048, bias=False)
+              (act_fn): SiLU()
+            )
+          )
+          (gate): MoEGate()
+          (shared_experts): SigmaMLP(
+            (gate_proj): Linear(in_features=2048, out_features=4608, bias=False)
+            (up_proj): Linear(in_features=2048, out_features=4608, bias=False)
+            (down_proj): Linear(in_features=4608, out_features=2048, bias=False)
+            (act_fn): SiLU()
+          )
+        )
+        (input_layernorm): SigmaRMSNorm()
+        (post_attention_layernorm): SigmaRMSNorm()
+      )
+      (23): SigmaDecoderLayer(
+        (self_attn): SigmaFlashAttention2(
+          (q_proj): Linear(in_features=2048, out_features=2048, bias=False)
+          (kv_a_proj_with_mqa): Linear(in_features=2048, out_features=544, bias=False)
+          (kv_a_layernorm): SigmaRMSNorm()
+          (kv_b_proj): Linear(in_features=512, out_features=3584, bias=False)
+          (o_proj): Linear(in_features=2048, out_features=2048, bias=False)
+          (rotary_emb): SigmaYarnRotaryEmbedding()
+        )
+        (mlp): SigmaMoE(
+          (experts): ModuleList(
+            (0-63): 64 x SigmaMLP(
+              (gate_proj): Linear(in_features=2048, out_features=1536, bias=False)
+              (up_proj): Linear(in_features=2048, out_features=1536, bias=False)
+              (down_proj): Linear(in_features=1536, out_features=2048, bias=False)
+              (act_fn): SiLU()
+            )
+          )
+          (gate): MoEGate()
+          (shared_experts): SigmaMLP(
+            (gate_proj): Linear(in_features=2048, out_features=4608, bias=False)
+            (up_proj): Linear(in_features=2048, out_features=4608, bias=False)
+            (down_proj): Linear(in_features=4608, out_features=2048, bias=False)
+            (act_fn): SiLU()
+          )
+        )
+        (input_layernorm): SigmaRMSNorm()
+        (post_attention_layernorm): SigmaRMSNorm()
+      )
+      (24): SigmaDecoderLayer(
+        (self_attn): LlamaAttention(
+          (q_proj): Linear(in_features=2048, out_features=2048, bias=False)
+          (k_proj): Linear(in_features=2048, out_features=2048, bias=False)
+          (v_proj): Linear(in_features=2048, out_features=2048, bias=False)
+          (o_proj): Linear(in_features=2048, out_features=2048, bias=False)
+        )
+        (mlp): SigmaMoE(
+          (experts): ModuleList(
+            (0-63): 64 x SigmaMLP(
+              (gate_proj): Linear(in_features=2048, out_features=1536, bias=False)
+              (up_proj): Linear(in_features=2048, out_features=1536, bias=False)
+              (down_proj): Linear(in_features=1536, out_features=2048, bias=False)
+              (act_fn): SiLU()
+            )
+          )
+          (gate): MoEGate()
+          (shared_experts): SigmaMLP(
+            (gate_proj): Linear(in_features=2048, out_features=4608, bias=False)
+            (up_proj): Linear(in_features=2048, out_features=4608, bias=False)
+            (down_proj): Linear(in_features=4608, out_features=2048, bias=False)
+            (act_fn): SiLU()
+          )
+        )
+        (input_layernorm): SigmaRMSNorm()
+        (post_attention_layernorm): SigmaRMSNorm()
+      )
+      (25): SigmaDecoderLayer(
+        (self_attn): SigmaFlashAttention2(
+          (q_proj): Linear(in_features=2048, out_features=2048, bias=False)
+          (kv_a_proj_with_mqa): Linear(in_features=2048, out_features=544, bias=False)
+          (kv_a_layernorm): SigmaRMSNorm()
+          (kv_b_proj): Linear(in_features=512, out_features=3584, bias=False)
+          (o_proj): Linear(in_features=2048, out_features=2048, bias=False)
+          (rotary_emb): SigmaYarnRotaryEmbedding()
+        )
+        (mlp): SigmaMoE(
+          (experts): ModuleList(
+            (0-63): 64 x SigmaMLP(
+              (gate_proj): Linear(in_features=2048, out_features=1536, bias=False)
+              (up_proj): Linear(in_features=2048, out_features=1536, bias=False)
+              (down_proj): Linear(in_features=1536, out_features=2048, bias=False)
+              (act_fn): SiLU()
+            )
+          )
+          (gate): MoEGate()
+          (shared_experts): SigmaMLP(
+            (gate_proj): Linear(in_features=2048, out_features=4608, bias=False)
+            (up_proj): Linear(in_features=2048, out_features=4608, bias=False)
+            (down_proj): Linear(in_features=4608, out_features=2048, bias=False)
+            (act_fn): SiLU()
+          )
+        )
+        (input_layernorm): SigmaRMSNorm()
+        (post_attention_layernorm): SigmaRMSNorm()
+      )
+      (26): SigmaDecoderLayer(
+        (self_attn): LlamaAttention(
+          (q_proj): Linear(in_features=2048, out_features=2048, bias=False)
+          (k_proj): Linear(in_features=2048, out_features=2048, bias=False)
+          (v_proj): Linear(in_features=2048, out_features=2048, bias=False)
+          (o_proj): Linear(in_features=2048, out_features=2048, bias=False)
+        )
+        (mlp): SigmaMoE(
+          (experts): ModuleList(
+            (0-63): 64 x SigmaMLP(
+              (gate_proj): Linear(in_features=2048, out_features=1536, bias=False)
+              (up_proj): Linear(in_features=2048, out_features=1536, bias=False)
+              (down_proj): Linear(in_features=1536, out_features=2048, bias=False)
+              (act_fn): SiLU()
+            )
+          )
+          (gate): MoEGate()
+          (shared_experts): SigmaMLP(
+            (gate_proj): Linear(in_features=2048, out_features=4608, bias=False)
+            (up_proj): Linear(in_features=2048, out_features=4608, bias=False)
+            (down_proj): Linear(in_features=4608, out_features=2048, bias=False)
+            (act_fn): SiLU()
+          )
+        )
+        (input_layernorm): SigmaRMSNorm()
+        (post_attention_layernorm): SigmaRMSNorm()
+      )
+      (27): SigmaDecoderLayer(
+        (self_attn): SigmaFlashAttention2(
+          (q_proj): Linear(in_features=2048, out_features=2048, bias=False)
+          (kv_a_proj_with_mqa): Linear(in_features=2048, out_features=544, bias=False)
+          (kv_a_layernorm): SigmaRMSNorm()
+          (kv_b_proj): Linear(in_features=512, out_features=3584, bias=False)
+          (o_proj): Linear(in_features=2048, out_features=2048, bias=False)
+          (rotary_emb): SigmaYarnRotaryEmbedding()
+        )
+        (mlp): SigmaMoE(
+          (experts): ModuleList(
+            (0-63): 64 x SigmaMLP(
+              (gate_proj): Linear(in_features=2048, out_features=1536, bias=False)
+              (up_proj): Linear(in_features=2048, out_features=1536, bias=False)
+              (down_proj): Linear(in_features=1536, out_features=2048, bias=False)
+              (act_fn): SiLU()
+            )
+          )
+          (gate): MoEGate()
+          (shared_experts): SigmaMLP(
+            (gate_proj): Linear(in_features=2048, out_features=4608, bias=False)
+            (up_proj): Linear(in_features=2048, out_features=4608, bias=False)
+            (down_proj): Linear(in_features=4608, out_features=2048, bias=False)
+            (act_fn): SiLU()
+          )
+        )
+        (input_layernorm): SigmaRMSNorm()
+        (post_attention_layernorm): SigmaRMSNorm()
+      )
+    )
+    (norm): SigmaRMSNorm()
+    (rotary_emb): LlamaRotaryEmbedding()
+  )
+  (lm_head): Linear(in_features=2048, out_features=200064, bias=False)
+)
